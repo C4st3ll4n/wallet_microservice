@@ -2,6 +2,8 @@ package transaction
 
 import (
 	"github.com/C4st3ll4n/wallet/internal/entity"
+	"github.com/C4st3ll4n/wallet/internal/event"
+	"github.com/C4st3ll4n/wallet/pkg/events"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"testing"
@@ -53,7 +55,10 @@ func TestCreateTransaction(t *testing.T) {
 		Amount:               500,
 	}
 
-	usecase := NewCreateTransaction(&mockTransaction, &mockAccount)
+	dispatcher := events.NewEventDispatcher()
+	transactionCreated := event.NewTransactionCreated()
+
+	usecase := NewCreateTransaction(&mockTransaction, &mockAccount, dispatcher, transactionCreated)
 	output, err := usecase.Execute(inputDTO)
 
 	assert.Nil(t, err)

@@ -38,7 +38,7 @@ func (c *AccountDB) FindById(id string) (*entity.Account, error) {
 	return &account, nil
 }
 
-func (c *AccountDB) Save(account *entity.Account) error {
+func (c *AccountDB) Save(account entity.Account) error {
 	stmt, err := c.DB.Prepare("INSERT INTO accounts (id, client_id, balance, created_at) VALUES (?, ?, ?, ?)")
 	if err != nil {
 		return err
